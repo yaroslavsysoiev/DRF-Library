@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_q',
     'django_filters',
+
     
     # Local apps
     'books',
@@ -132,7 +133,6 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
-}
 
 # JWT Settings
 SIMPLE_JWT = {
