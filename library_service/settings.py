@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'payments',
     'notifications',
     'tasks',
+    'analytics',
 ]
 
 MIDDLEWARE = [

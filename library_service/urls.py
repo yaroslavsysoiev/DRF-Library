@@ -13,11 +13,12 @@ urlpatterns = [
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     
     # API endpoints
-    path('api/books/', include('books.urls')),
-    path('api/users/', include('users.urls')),
-    path('api/borrowings/', include('borrowings.urls')),
-    path('api/payments/', include('payments.urls')),
+    path('api/', include('books.urls')),
+    path('api/', include('users.urls')),
+    path('api/', include('borrowings.urls')),
+    path('api/', include('payments.urls')),
     path('api/', include('notifications.urls')),
+    path('api/', include('analytics.urls')),
 ]
 
 if settings.DEBUG:
