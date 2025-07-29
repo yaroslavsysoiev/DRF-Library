@@ -170,10 +170,61 @@ CORS_ALLOWED_ORIGINS = [
 
 # Spectacular settings
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Library Service API',
-    'DESCRIPTION': 'API for library book borrowing system',
+    'TITLE': 'DRF Library API',
+    'DESCRIPTION': '''
+    # DRF Library Management System API
+    
+    ## Overview
+    A comprehensive library management system built with Django REST Framework.
+    
+    ## Features
+    - **User Management**: Registration, authentication, and profile management
+    - **Book Management**: CRUD operations for books with inventory tracking
+    - **Borrowing System**: Book borrowing and return functionality
+    - **Payment Processing**: Stripe integration for payments and fines
+    - **Notifications**: Telegram integration for real-time notifications
+    - **Analytics**: Comprehensive reporting and analytics
+    - **Scheduled Tasks**: Automated fine processing and notifications
+    
+    ## Authentication
+    This API uses JWT (JSON Web Tokens) for authentication.
+    Include the token in the Authorization header: `Authorize <token>`
+    
+    ## Rate Limiting
+    - API endpoints: 10 requests/second
+    - Login endpoints: 5 requests/minute
+    
+    ## Environment Variables
+    Required environment variables for full functionality:
+    - `STRIPE_PUBLISHABLE_KEY`: Stripe publishable key
+    - `STRIPE_SECRET_KEY`: Stripe secret key
+    - `TELEGRAM_BOT_TOKEN`: Telegram bot token
+    - `TELEGRAM_CHAT_ID`: Telegram chat ID
+    - `FINE_MULTIPLIER`: Fine calculation multiplier (default: 2.0)
+    ''',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+        'displayRequestDuration': True,
+        'filter': True,
+    },
+    'REDOC_UI_SETTINGS': {
+        'hideDownloadButton': True,
+        'hideHostname': True,
+    },
+    'TAGS': [
+        {'name': 'auth', 'description': 'Authentication endpoints'},
+        {'name': 'users', 'description': 'User management endpoints'},
+        {'name': 'books', 'description': 'Book management endpoints'},
+        {'name': 'borrowings', 'description': 'Borrowing management endpoints'},
+        {'name': 'payments', 'description': 'Payment processing endpoints'},
+        {'name': 'fines', 'description': 'Fine management endpoints'},
+        {'name': 'notifications', 'description': 'Notification endpoints'},
+        {'name': 'analytics', 'description': 'Analytics and reporting endpoints'},
+    ],
 }
 
 # Django Q settings
