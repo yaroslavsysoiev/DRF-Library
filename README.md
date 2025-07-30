@@ -1,94 +1,94 @@
 # 📚 DRF Library Management System
 
-Сучасна система управління бібліотекою, побудована на Django REST Framework з інтеграцією Stripe для платежів та Telegram для сповіщень.
+A modern library management system built on Django REST Framework with Stripe integration for payments and Telegram for notifications.
 
-## 🚀 Особливості
+## 🚀 Features
 
 ### Core Functionality
-- **👥 User Management**: Реєстрація, аутентифікація та управління профілями
-- **📖 Book Management**: CRUD операції для книг з відстеженням інвентаря
-- **📚 Borrowing System**: Система позичання та повернення книг
-- **💳 Payment Processing**: Інтеграція зі Stripe для платежів та штрафів
-- **📱 Notifications**: Telegram інтеграція для сповіщень у реальному часі
-- **📊 Analytics**: Комплексна звітність та аналітика
-- **⏰ Scheduled Tasks**: Автоматизована обробка штрафів та сповіщень
+- **👥 User Management**: Registration, authentication, and profile management
+- **📖 Book Management**: CRUD operations for books with inventory tracking
+- **📚 Borrowing System**: Book borrowing and return system
+- **💳 Payment Processing**: Stripe integration for payments and fines
+- **📱 Notifications**: Telegram integration for real-time notifications
+- **📊 Analytics**: Comprehensive reporting and analytics
+- **⏰ Scheduled Tasks**: Automated fine processing and notifications
 
 ### Technical Features
-- **🔐 JWT Authentication**: Безпечна аутентифікація
-- **🛡️ Permissions**: Розширена система дозволів
-- **🔍 Filtering & Search**: Просунутий пошук та фільтрація
-- **📄 Pagination**: Пагінація для великих наборів даних
-- **🐳 Docker Support**: Повна підтримка Docker
-- **📈 Monitoring**: Health checks та моніторинг
-- **🧪 Testing**: Комплексна система тестування
+- **🔐 JWT Authentication**: Secure authentication
+- **🛡️ Permissions**: Advanced permission system
+- **🔍 Filtering & Search**: Advanced search and filtering
+- **📄 Pagination**: Pagination for large datasets
+- **🐳 Docker Support**: Full Docker support
+- **📈 Monitoring**: Health checks and monitoring
+- **🧪 Testing**: Comprehensive testing system
 
-## 🛠️ Технології
+## 🛠️ Technologies
 
 ### Backend
-- **Django 4.2.7**: Основний фреймворк
-- **Django REST Framework 3.14.0**: API фреймворк
-- **PostgreSQL**: Основна база даних
-- **Redis**: Кешування та черги завдань
-- **Django-Q**: Планові завдання
+- **Django 4.2.7**: Main framework
+- **Django REST Framework 3.14.0**: API framework
+- **PostgreSQL**: Main database
+- **Redis**: Caching and task queues
+- **Django-Q**: Scheduled tasks
 
 ### External Integrations
-- **Stripe**: Платежі та штрафи
-- **Telegram Bot API**: Сповіщення
-- **JWT**: Аутентифікація
+- **Stripe**: Payments and fines
+- **Telegram Bot API**: Notifications
+- **JWT**: Authentication
 
 ### Development & Testing
-- **Pytest**: Тестування
-- **Factory Boy**: Тестові дані
-- **Coverage**: Покриття тестами
-- **Docker**: Контейнеризація
+- **Pytest**: Testing
+- **Factory Boy**: Test data
+- **Coverage**: Test coverage
+- **Docker**: Containerization
 - **Nginx**: Reverse proxy
 
-## 📋 Вимоги
+## 📋 Requirements
 
 - Python 3.11+
 - PostgreSQL 15+
 - Redis 7+
-- Docker & Docker Compose (опціонально)
+- Docker & Docker Compose (optional)
 
-## 🚀 Швидкий старт
+## 🚀 Quick Start
 
-### 1. Клонування репозиторію
+### 1. Clone the repository
 ```bash
 git clone <repository-url>
 cd DRF-Library
 ```
 
-### 2. Налаштування середовища
+### 2. Environment setup
 ```bash
-# Створіть віртуальне середовище
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# або
+# or
 venv\Scripts\activate  # Windows
 
-# Встановіть залежності
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 3. Налаштування змінних середовища
+### 3. Environment variables setup
 ```bash
-# Скопіюйте .env.sample
+# Copy .env.sample
 cp .env.sample .env
 
-# Відредагуйте .env файл
+# Edit .env file
 nano .env
 ```
 
-### 4. База даних
+### 4. Database
 ```bash
-# Міграції
+# Migrations
 python manage.py migrate
 
-# Створення суперкористувача
+# Create superuser
 python manage.py createsuperuser
 ```
 
-### 5. Запуск сервера
+### 5. Start server
 ```bash
 python manage.py runserver
 ```
@@ -109,115 +109,115 @@ docker-compose -f docker-compose.prod.yml up -d --build
 
 ### Swagger UI
 - **URL**: `http://localhost:8000/api/docs/`
-- **Description**: Інтерактивна документація API
+- **Description**: Interactive API documentation
 
 ### ReDoc
 - **URL**: `http://localhost:8000/api/redoc/`
-- **Description**: Альтернативна документація API
+- **Description**: Alternative API documentation
 
-## 🔐 Аутентифікація
+## 🔐 Authentication
 
-API використовує JWT (JSON Web Tokens) для аутентифікації.
+The API uses JWT (JSON Web Tokens) for authentication.
 
-### Отримання токену
+### Getting a token
 ```bash
 curl -X POST http://localhost:8000/api/users/token/ \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com", "password": "password"}'
 ```
 
-### Використання токену
+### Using the token
 ```bash
 curl -X GET http://localhost:8000/api/books/ \
   -H "Authorization: Authorize <your_token>"
 ```
 
-## 📊 Основні Endpoints
+## 📊 Main Endpoints
 
 ### Users
-- `POST /api/users/register/` - Реєстрація користувача
-- `POST /api/users/token/` - Отримання JWT токену
-- `POST /api/users/token/refresh/` - Оновлення токену
-- `GET /api/users/profile/` - Профіль користувача
+- `POST /api/users/register/` - User registration
+- `POST /api/users/token/` - Get JWT token
+- `POST /api/users/token/refresh/` - Refresh token
+- `GET /api/users/profile/` - User profile
 
 ### Books
-- `GET /api/books/` - Список книг
-- `GET /api/books/{id}/` - Деталі книги
-- `POST /api/books/` - Створення книги (admin)
-- `PUT /api/books/{id}/` - Оновлення книги (admin)
-- `DELETE /api/books/{id}/` - Видалення книги (admin)
+- `GET /api/books/` - List books
+- `GET /api/books/{id}/` - Book details
+- `POST /api/books/` - Create book (admin)
+- `PUT /api/books/{id}/` - Update book (admin)
+- `DELETE /api/books/{id}/` - Delete book (admin)
 
 ### Borrowings
-- `GET /api/borrowings/` - Список позичень
-- `POST /api/borrowings/` - Створення позичання
-- `GET /api/borrowings/{id}/` - Деталі позичання
-- `PATCH /api/borrowings/{id}/return/` - Повернення книги
+- `GET /api/borrowings/` - List borrowings
+- `POST /api/borrowings/` - Create borrowing
+- `GET /api/borrowings/{id}/` - Borrowing details
+- `PATCH /api/borrowings/{id}/return/` - Return book
 
 ### Payments
-- `GET /api/payments/` - Список платежів
-- `POST /api/payments/` - Створення платежу
-- `GET /api/payments/{id}/` - Деталі платежу
-- `POST /api/payments/{id}/refund/` - Повернення платежу (admin)
+- `GET /api/payments/` - List payments
+- `POST /api/payments/` - Create payment
+- `GET /api/payments/{id}/` - Payment details
+- `POST /api/payments/{id}/refund/` - Refund payment (admin)
 
 ### Analytics
-- `GET /api/analytics/revenue/` - Аналітика доходів
-- `GET /api/analytics/borrowings/` - Аналітика позичень
-- `GET /api/analytics/books/` - Аналітика книг
-- `GET /api/analytics/users/` - Аналітика користувачів
+- `GET /api/analytics/revenue/` - Revenue analytics
+- `GET /api/analytics/borrowings/` - Borrowing analytics
+- `GET /api/analytics/books/` - Book analytics
+- `GET /api/analytics/users/` - User analytics
 
 ## 🔧 Management Commands
 
-### Налаштування планових завдань
+### Setup scheduled tasks
 ```bash
 python manage.py setup_tasks
 ```
 
-### Запуск конкретного завдання
+### Run specific task
 ```bash
 python manage.py run_task daily_summary
 ```
 
-### Тестування
+### Testing
 ```bash
-# Запуск всіх тестів
+# Run all tests
 python -m pytest
 
-# Запуск з покриттям
+# Run with coverage
 python -m pytest --cov=.
 
-# Запуск конкретного тесту
+# Run specific test
 python -m pytest tests/test_users.py::TestUserRegistration::test_user_registration_success
 ```
 
-## 📈 Моніторинг
+## 📈 Monitoring
 
 ### Health Check
 ```bash
 curl http://localhost:8000/health/
 ```
 
-### Логи
+### Logs
 ```bash
-# Django логи
+# Django logs
 tail -f logs/django.log
 
-# Docker логи
+# Docker logs
 docker-compose logs -f web
 ```
 
-## 🔒 Безпека
+## 🔒 Security
 
 ### Rate Limiting
 - API endpoints: 10 requests/second
 - Login endpoints: 5 requests/minute
 
 ### Permissions
-- **Public**: Перегляд книг
-- **Authenticated**: Позичання книг, управління профілем
-- **Admin**: Повний доступ до всіх функцій
+- **Public**: View books
+- **Authenticated**: Borrow books, manage profile
+- **Admin**: Full access to all features
 
 ### Environment Variables
-Обов'язкові змінні середовища:
+Required environment variables:
 ```bash
 SECRET_KEY=your-secret-key
 STRIPE_PUBLISHABLE_KEY=pk_test_...
@@ -227,78 +227,78 @@ TELEGRAM_CHAT_ID=your_chat_id
 FINE_MULTIPLIER=2.0
 ```
 
-## 🧪 Тестування
+## 🧪 Testing
 
-### Покриття тестами
-- **Unit Tests**: Моделі, серіалізатори, permissions
+### Test Coverage
+- **Unit Tests**: Models, serializers, permissions
 - **Integration Tests**: API endpoints
 - **Coverage Target**: 60%+
 
-### Запуск тестів
+### Running Tests
 ```bash
-# Всі тести
+# All tests
 python -m pytest
 
-# З покриттям
+# With coverage
 python -m pytest --cov=. --cov-report=html
 
-# Конкретний маркер
+# Specific marker
 python -m pytest -m "api"
 ```
 
-## 📁 Структура проекту
+## 📁 Project Structure
 
 ```
 DRF-Library/
-├── library_service/          # Основні налаштування Django
-├── users/                   # Управління користувачами
-├── books/                   # Управління книгами
-├── borrowings/              # Система позичань
-├── payments/                # Платежі та штрафи
-├── notifications/           # Telegram сповіщення
-├── analytics/               # Аналітика та звіти
-├── tasks/                   # Планові завдання
-├── tests/                   # Тести
-├── nginx/                   # Nginx конфігурація
-├── docker-compose.yml       # Docker композиція
-├── Dockerfile              # Docker образ
-└── requirements.txt         # Python залежності
+├── library_service/          # Main Django settings
+├── users/                   # User management
+├── books/                   # Book management
+├── borrowings/              # Borrowing system
+├── payments/                # Payments and fines
+├── notifications/           # Telegram notifications
+├── analytics/               # Analytics and reports
+├── tasks/                   # Scheduled tasks
+├── tests/                   # Tests
+├── nginx/                   # Nginx configuration
+├── docker-compose.yml       # Docker composition
+├── Dockerfile              # Docker image
+└── requirements.txt         # Python dependencies
 ```
 
 ## 🤝 Contributing
 
-1. Fork репозиторію
-2. Створіть feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit змін (`git commit -m 'Add amazing feature'`)
-4. Push до branch (`git push origin feature/amazing-feature`)
-5. Відкрийте Pull Request
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
 ## 📝 License
 
-Цей проект ліцензований під MIT License - дивіться файл [LICENSE](LICENSE) для деталей.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
-При виникненні проблем:
-1. Перевірте [Issues](https://github.com/your-repo/issues)
-2. Створіть нове Issue з детальним описом проблеми
-3. Перевірте логи: `docker-compose logs`
+If you encounter issues:
+1. Check [Issues](https://github.com/your-repo/issues)
+2. Create new Issue with detailed problem description
+3. Check logs: `docker-compose logs`
 
 ## 🎯 Roadmap
 
 ### Planned Features
-- [ ] Email сповіщення
-- [ ] SMS сповіщення
-- [ ] Мобільний додаток
-- [ ] Machine Learning для рекомендацій
-- [ ] Blockchain для децентралізованого управління
+- [ ] Email notifications
+- [ ] SMS notifications
+- [ ] Mobile application
+- [ ] Machine Learning for recommendations
+- [ ] Blockchain for decentralized management
 
 ### Performance Improvements
-- [ ] Redis кешування
-- [ ] Database оптимізація
-- [ ] CDN для статичних файлів
+- [ ] Redis caching
+- [ ] Database optimization
+- [ ] CDN for static files
 - [ ] Load balancing
 
 ---
 
-**Розроблено з ❤️ використовуючи Django REST Framework**
+**Developed with ❤️ using Django REST Framework**

@@ -1,6 +1,6 @@
 # Docker Deployment Guide
 
-Цей документ описує як розгорнути DRF Library проект за допомогою Docker.
+This document describes how to deploy the DRF Library project using Docker.
 
 ## 🐳 Prerequisites
 
@@ -10,106 +10,106 @@
 
 ## 🚀 Quick Start
 
-### 1. Клонування проекту
+### 1. Clone the project
 ```bash
 git clone <repository-url>
 cd DRF-Library
 ```
 
-### 2. Налаштування змінних середовища
+### 2. Environment variables setup
 ```bash
-# Скопіюйте .env.sample
+# Copy .env.sample
 cp .env.sample .env
 
-# Відредагуйте .env файл з вашими налаштуваннями
+# Edit .env file with your settings
 nano .env
 ```
 
-### 3. Запуск в режимі розробки
+### 3. Run in development mode
 ```bash
-# Збудувати та запустити контейнери
+# Build and run containers
 docker-compose up --build
 
-# Або в фоновому режимі
+# Or in background mode
 docker-compose up -d --build
 ```
 
-### 4. Створення суперкористувача
+### 4. Create superuser
 ```bash
 docker-compose exec web python manage.py createsuperuser
 ```
 
-### 5. Налаштування планових завдань
+### 5. Setup scheduled tasks
 ```bash
 docker-compose exec web python manage.py setup_tasks
 ```
 
 ## 🏭 Production Deployment
 
-### 1. Налаштування production змінних
+### 1. Production environment variables setup
 ```bash
-# Створіть .env файл для production
+# Create .env file for production
 cp .env.sample .env
-# Відредагуйте змінні для production
+# Edit variables for production
 ```
 
-### 2. Запуск production версії
+### 2. Run production version
 ```bash
-# Використовуйте production docker-compose
+# Use production docker-compose
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
-### 3. Перевірка статусу
+### 3. Check status
 ```bash
-# Перевірте статус контейнерів
+# Check container status
 docker-compose -f docker-compose.prod.yml ps
 
-# Перевірте логи
+# Check logs
 docker-compose -f docker-compose.prod.yml logs -f
 ```
 
-## 📁 Структура проекту
+## 📁 Project Structure
 
 ```
 DRF-Library/
-├── Dockerfile                 # Docker образ для Django
-├── docker-compose.yml         # Development композиція
-├── docker-compose.prod.yml    # Production композиція
-├── .dockerignore             # Файли для ігнорування в Docker
+├── Dockerfile                 # Docker image for Django
+├── docker-compose.yml         # Development composition
+├── docker-compose.prod.yml    # Production composition
+├── .dockerignore             # Files to ignore in Docker
 ├── nginx/
-│   └── nginx.conf           # Nginx конфігурація
+│   └── nginx.conf           # Nginx configuration
 ├── library_service/
-│   ├── settings.py          # Development налаштування
-│   └── settings_production.py # Production налаштування
-└── requirements.txt          # Python залежності
+│   ├── settings.py          # Development settings
+│   └── settings_production.py # Production settings
+└── requirements.txt          # Python dependencies
 ```
 
 ## 🔧 Services
 
 ### Web (Django)
 - **Port**: 8000
-- **Command**: Gunicorn з 4 workers
-- **Environment**: Production налаштування
+- **Command**: Gunicorn with 4 workers
+- **Environment**: Production settings
 
 ### Worker (Django-Q)
 - **Command**: `python manage.py qcluster`
-- **Purpose**: Обробка планових завдань
+- **Purpose**: Processing scheduled tasks
 
 ### Database (PostgreSQL)
 - **Port**: 5432
 - **Volume**: `postgres_data`
-- **Purpose**: Основна база даних
+- **Purpose**: Main database
 
 ### Redis
 - **Port**: 6379
 - **Volume**: `redis_data`
-- **Purpose**: Кеш та черги завдань
+- **Purpose**: Cache and task queues
 
 ### Nginx
 - **Port**: 80, 443
-- **Purpose**: Reverse proxy та статичні файли
+- **Purpose**: Reverse proxy and static files
 
-## 🌐 Доступні endpoints
+## 🌐 Available endpoints
 
 - **API Documentation**: http://localhost/api/docs/
 - **ReDoc**: http://localhost/api/redoc/
@@ -118,23 +118,23 @@ DRF-Library/
 
 ## 🔍 Monitoring
 
-### Перевірка здоров'я системи
+### System health check
 ```bash
 curl http://localhost/health/
 ```
 
-### Перегляд логів
+### View logs
 ```bash
-# Всі сервіси
+# All services
 docker-compose logs
 
-# Конкретний сервіс
+# Specific service
 docker-compose logs web
 docker-compose logs worker
 docker-compose logs nginx
 ```
 
-### Перевірка баз даних
+### Database check
 ```bash
 # PostgreSQL
 docker-compose exec db psql -U library_user -d library_db
@@ -145,124 +145,124 @@ docker-compose exec redis redis-cli
 
 ## 🛠️ Management Commands
 
-### Django команди
+### Django commands
 ```bash
-# Міграції
+# Migrations
 docker-compose exec web python manage.py migrate
 
-# Створення суперкористувача
+# Create superuser
 docker-compose exec web python manage.py createsuperuser
 
-# Збірка статичних файлів
+# Collect static files
 docker-compose exec web python manage.py collectstatic
 
-# Налаштування завдань
+# Setup tasks
 docker-compose exec web python manage.py setup_tasks
 
-# Запуск конкретного завдання
+# Run specific task
 docker-compose exec web python manage.py run_task daily_summary
 ```
 
-### Docker команди
+### Docker commands
 ```bash
-# Перезапуск сервісів
+# Restart services
 docker-compose restart
 
-# Оновлення образів
+# Update images
 docker-compose pull
 
-# Очищення невикористаних ресурсів
+# Clean unused resources
 docker system prune
 ```
 
 ## 🔒 Security
 
 ### Environment Variables
-- `SECRET_KEY`: Ключ безпеки Django
-- `POSTGRES_PASSWORD`: Пароль бази даних
-- `STRIPE_SECRET_KEY`: Секретний ключ Stripe
-- `TELEGRAM_BOT_TOKEN`: Токен Telegram бота
+- `SECRET_KEY`: Django security key
+- `POSTGRES_PASSWORD`: Database password
+- `STRIPE_SECRET_KEY`: Stripe secret key
+- `TELEGRAM_BOT_TOKEN`: Telegram bot token
 
 ### Network Security
-- Всі сервіси ізольовані в `library_network`
-- Nginx налаштований з rate limiting
-- Security headers включені
+- All services isolated in `library_network`
+- Nginx configured with rate limiting
+- Security headers enabled
 
 ## 📊 Performance
 
-### Оптимізації
-- Gunicorn з 4 workers
-- Nginx з gzip компресією
-- Redis для кешування
-- PostgreSQL оптимізований для production
+### Optimizations
+- Gunicorn with 4 workers
+- Nginx with gzip compression
+- Redis for caching
+- PostgreSQL optimized for production
 
-### Моніторинг
+### Monitoring
 - Health check endpoint
 - Structured logging
 - Error tracking
 
 ## 🚨 Troubleshooting
 
-### Проблеми з базою даних
+### Database issues
 ```bash
-# Перевірка підключення
+# Check connection
 docker-compose exec web python manage.py dbshell
 
-# Скидання бази даних
+# Reset database
 docker-compose down -v
 docker-compose up -d
 ```
 
-### Проблеми з Redis
+### Redis issues
 ```bash
-# Перевірка Redis
+# Check Redis
 docker-compose exec redis redis-cli ping
 
-# Очищення кешу
+# Clear cache
 docker-compose exec redis redis-cli flushall
 ```
 
-### Проблеми з Nginx
+### Nginx issues
 ```bash
-# Перевірка конфігурації
+# Check configuration
 docker-compose exec nginx nginx -t
 
-# Перезапуск Nginx
+# Restart Nginx
 docker-compose restart nginx
 ```
 
 ## 📝 Deployment Checklist
 
-- [ ] Налаштовані всі environment variables
-- [ ] База даних мігрується успішно
-- [ ] Статичні файли зібрані
-- [ ] Суперкористувач створений
-- [ ] Планові завдання налаштовані
-- [ ] Health check проходить
-- [ ] Логи перевірені
-- [ ] SSL сертифікати налаштовані (production)
-- [ ] Backup стратегія налаштована
+- [ ] All environment variables configured
+- [ ] Database migrations successful
+- [ ] Static files collected
+- [ ] Superuser created
+- [ ] Scheduled tasks configured
+- [ ] Health check passes
+- [ ] Logs checked
+- [ ] SSL certificates configured (production)
+- [ ] Backup strategy configured
 
 ## 🔄 Backup & Recovery
 
-### Backup бази даних
+### Database backup
 ```bash
 docker-compose exec db pg_dump -U library_user library_db > backup.sql
 ```
 
-### Restore бази даних
+### Database restore
 ```bash
 docker-compose exec -T db psql -U library_user library_db < backup.sql
 ```
 
-### Backup volumes
+### Volume backup
 ```bash
 docker run --rm -v library_postgres_data:/data -v $(pwd):/backup alpine tar czf /backup/postgres_backup.tar.gz -C /data .
 ```
 
 ## 📞 Support
 
-При виникненні проблем:
-1. Перевірте логи: `docker-compose logs`
-2. Перевірте health endpoint: `curl http://localhost/health/`
-3. Перевірте статус контейнерів: `docker-compose ps`
+If you encounter issues:
+1. Check logs: `docker-compose logs`
+2. Check health endpoint: `curl http://localhost/health/`
+3. Check container status: `docker-compose ps`
